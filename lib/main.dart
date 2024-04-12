@@ -1,3 +1,4 @@
+import 'package:app_dsi/Splash.dart';
 import 'package:app_dsi/components/CustomRoundedIconButton.dart';
 import 'package:app_dsi/core/theme/color_schemes.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         colorScheme: lightColorScheme,
       ),
-      home: const LoginPage(),
+      home: const Splash(),
     );
   }
 }
