@@ -1,35 +1,11 @@
-import 'package:app_dsi/Splash.dart';
-import 'package:app_dsi/components/CustomRoundedIconButton.dart';
-import 'package:app_dsi/core/theme/color_schemes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:app_dsi/RegisterPage.dart';
+import 'package:app_dsi/core/theme/color_schemes.dart';
+import 'package:app_dsi/components/CustomRoundedIconButton.dart';
 
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        useMaterial3: true,
-        colorScheme: lightColorScheme,
-      ),
-      home: const RegisterPage(),
-    );
-  }
-}
-
-class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+class RegisterPage extends StatelessWidget {
+  const RegisterPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -44,13 +20,13 @@ class LoginPage extends StatelessWidget {
               child: FractionallySizedBox(
                 heightFactor: 0.60,
                 widthFactor: 1,
-                child: SvgPicture.asset('assets/svg/running-people.svg'),
+                child: SvgPicture.asset('assets/svg/running-man-data.svg'),
               ),
             ),
             SizedBox(
               height: 50,
               child: Text(
-                'Login',
+                'Cadastro',
                 style: GoogleFonts.poppins(
                   textStyle: const TextStyle(
                     fontSize: 36,
@@ -62,7 +38,7 @@ class LoginPage extends StatelessWidget {
             const SizedBox(height: 10),
             SizedBox(
               child: Text(
-                'E-mail:',
+                'Nome:',
                 style: GoogleFonts.poppins(
                   textStyle: const TextStyle(
                     fontWeight: FontWeight.w400,
@@ -73,8 +49,8 @@ class LoginPage extends StatelessWidget {
             ),
             const TextField(
               decoration: InputDecoration(
-                prefixIcon: Icon(Icons.alternate_email_rounded),
-                hintText: 'Digite o seu endereço de e-mail',
+                prefixIcon: Icon(Icons.account_circle),
+                hintText: 'Digite o seu nome',
                 hintStyle: TextStyle(
                   fontSize: 10,
                   color: Colors.grey,
@@ -84,7 +60,7 @@ class LoginPage extends StatelessWidget {
             const SizedBox(height: 10),
             SizedBox(
               child: Text(
-                'Senha:',
+                'Email:',
                 style: GoogleFonts.poppins(
                   textStyle: const TextStyle(
                     fontWeight: FontWeight.w400,
@@ -98,8 +74,8 @@ class LoginPage extends StatelessWidget {
                 TextField(
                   obscureText: true,
                   decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.lock),
-                    hintText: '**************',
+                    prefixIcon: Icon(Icons.alternate_email),
+                    hintText: 'Digite seu endereço de e-mail',
                     hintStyle: TextStyle(
                       fontSize: 10,
                       color: Colors.grey,
@@ -108,22 +84,52 @@ class LoginPage extends StatelessWidget {
                 ),
               ],
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text(
-                    'Esqueci minha senha',
-                    style: GoogleFonts.poppins(
-                      textStyle: const TextStyle(
-                        fontSize: 10,
-                        fontWeight: FontWeight.w300,
-                      ),
-                    ),
+            const SizedBox(height: 10),
+            SizedBox(
+              child: Text(
+                'Senha:',
+                  style: GoogleFonts.poppins(
+                  textStyle: const TextStyle(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 18,
                   ),
-                ],
+                ),
               ),
+            ),
+            const TextField(
+              decoration: InputDecoration(
+                prefixIcon: Icon(Icons.lock),
+                hintText: '********',
+                hintStyle: TextStyle(
+                  fontSize: 10,
+                  color: Colors.grey,
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
+            SizedBox(
+              child: Text(
+                'Confirmar Senha:',
+                  style: GoogleFonts.poppins(
+                  textStyle: const TextStyle(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 18,
+                  ),
+                ),
+              ),
+            ),
+            const TextField(
+              decoration: InputDecoration(
+                prefixIcon: Icon(Icons.lock),
+                hintText: '********',
+                hintStyle: TextStyle(
+                  fontSize: 10,
+                  color: Colors.grey,
+                ),
+              ),
+            ),
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 16.0),
             ),
             const SizedBox(height: 6),
             Center(
@@ -137,7 +143,7 @@ class LoginPage extends StatelessWidget {
                       color: lightColorScheme.primary,
                       borderRadius: BorderRadius.circular(34)),
                   child: const Text(
-                    'Login',
+                    'Cadastra-se',
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
@@ -150,7 +156,7 @@ class LoginPage extends StatelessWidget {
             const SizedBox(height: 16),
             Center(
               child: Text(
-                'Não possue conta? Cadastre-se',
+                'já possue uma conta? faça login',
                 style: GoogleFonts.poppins(
                   textStyle: const TextStyle(
                     fontWeight: FontWeight.w300,
@@ -160,29 +166,20 @@ class LoginPage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 8.0),
+            const Padding(
+              padding: EdgeInsets.only(bottom: 8.0),
               child: Row(
                 children: [
-                  const Expanded(
+                  Expanded(
                     child: Divider(
                       thickness: 0.2,
                       color: Colors.grey,
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    child: Text(
-                      'Ou faça login com',
-                      style: GoogleFonts.poppins(
-                        textStyle: const TextStyle(
-                          fontWeight: FontWeight.w300,
-                          fontSize: 11,
-                        ),
-                      ),
-                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 8),
                   ),
-                  const Expanded(
+                  Expanded(
                     child: Divider(
                       thickness: 0.2,
                       color: Colors.grey,
@@ -191,19 +188,11 @@ class LoginPage extends StatelessWidget {
                 ],
               ),
             ),
-            const Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CustomRoundedIconButton(imagePath: 'assets/images/google-logo.png'),
-                SizedBox(
-                  width: 23,
-                ),
-                CustomRoundedIconButton(imagePath: 'assets/images/facebook-logo.png')
-              ],
-            )
           ],
         ),
       ),
     );
   }
 }
+
+
