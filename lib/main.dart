@@ -1,10 +1,9 @@
-import 'package:app_dsi/Splash.dart';
 import 'package:app_dsi/components/CustomRoundedIconButton.dart';
 import 'package:app_dsi/core/theme/color_schemes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:app_dsi/RegisterPage.dart';
+import 'package:app_dsi/screens/RegisterPage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -194,11 +193,13 @@ class LoginPage extends StatelessWidget {
             const Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                CustomRoundedIconButton(imagePath: 'assets/images/google-logo.png'),
+                CustomRoundedIconButton(
+                    imagePath: 'assets/images/google-logo.png'),
                 SizedBox(
                   width: 23,
                 ),
-                CustomRoundedIconButton(imagePath: 'assets/images/facebook-logo.png')
+                CustomRoundedIconButton(
+                    imagePath: 'assets/images/facebook-logo.png')
               ],
             )
           ],

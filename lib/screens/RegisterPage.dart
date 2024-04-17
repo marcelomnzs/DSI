@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:app_dsi/core/theme/color_schemes.dart';
-import 'package:app_dsi/components/CustomRoundedIconButton.dart';
 
 class RegisterPage extends StatelessWidget {
   const RegisterPage({super.key});
@@ -88,7 +87,7 @@ class RegisterPage extends StatelessWidget {
             SizedBox(
               child: Text(
                 'Senha:',
-                  style: GoogleFonts.poppins(
+                style: GoogleFonts.poppins(
                   textStyle: const TextStyle(
                     fontWeight: FontWeight.w400,
                     fontSize: 18,
@@ -110,7 +109,7 @@ class RegisterPage extends StatelessWidget {
             SizedBox(
               child: Text(
                 'Confirmar Senha:',
-                  style: GoogleFonts.poppins(
+                style: GoogleFonts.poppins(
                   textStyle: const TextStyle(
                     fontWeight: FontWeight.w400,
                     fontSize: 18,
@@ -194,5 +193,3 @@ class RegisterPage extends StatelessWidget {
     );
   }
 }
-
-
