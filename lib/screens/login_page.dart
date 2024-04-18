@@ -18,27 +18,35 @@ class LoginPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 30),
+            // const SizedBox(height: 30),
             Flexible(
-              child: FractionallySizedBox(
-                heightFactor: 0.60,
-                widthFactor: 1,
-                child: SvgPicture.asset('assets/svg/running-people.svg'),
-              ),
-            ),
-            SizedBox(
-              height: 50,
-              child: Text(
-                'Login',
-                style: GoogleFonts.poppins(
-                  textStyle: const TextStyle(
-                    fontSize: 36,
-                    fontWeight: FontWeight.w900,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 8.0),
+                child: FractionallySizedBox(
+                  heightFactor: 0.9,
+                  widthFactor: 1,
+                  child: SvgPicture.asset(
+                    'assets/svg/running-people.svg',
                   ),
                 ),
               ),
             ),
-            const SizedBox(height: 10),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 10.0),
+              child: SizedBox(
+                height: 50,
+                child: Text(
+                  'Login',
+                  style: GoogleFonts.poppins(
+                    textStyle: const TextStyle(
+                      fontSize: 36,
+                      fontWeight: FontWeight.w900,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            // const SizedBox(height: 10),
             SizedBox(
               child: Text(
                 'E-mail:',
@@ -60,14 +68,17 @@ class LoginPage extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 10),
-            SizedBox(
-              child: Text(
-                'Senha:',
-                style: GoogleFonts.poppins(
-                  textStyle: const TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontSize: 18,
+            // const SizedBox(height: 10),
+            Padding(
+              padding: const EdgeInsets.only(top: 16.0),
+              child: SizedBox(
+                child: Text(
+                  'Senha:',
+                  style: GoogleFonts.poppins(
+                    textStyle: const TextStyle(
+                      fontWeight: FontWeight.w400,
+                      fontSize: 18,
+                    ),
                   ),
                 ),
               ),
@@ -112,7 +123,7 @@ class LoginPage extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(height: 6),
+            // const SizedBox(height: 6),
             Center(
               child: GestureDetector(
                 onTap: () {
@@ -141,7 +152,7 @@ class LoginPage extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 16),
+            // const SizedBox(height: 16),
             Center(
               child: GestureDetector(
                 onTap: () {
@@ -151,18 +162,21 @@ class LoginPage extends StatelessWidget {
                         builder: (context) => const RegisterPage()),
                   );
                 },
-                child: Text(
-                  'Não possui conta? Cadastre-se',
-                  style: GoogleFonts.poppins(
-                    textStyle: const TextStyle(
-                      fontWeight: FontWeight.w300,
-                      fontSize: 10,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16.0),
+                  child: Text(
+                    'Não possui conta? Cadastre-se',
+                    style: GoogleFonts.poppins(
+                      textStyle: const TextStyle(
+                        fontWeight: FontWeight.w300,
+                        fontSize: 10,
+                      ),
                     ),
                   ),
                 ),
               ),
             ),
-            const SizedBox(height: 16),
+            // const SizedBox(height: 16),
             Padding(
               padding: const EdgeInsets.only(bottom: 8.0),
               child: Row(
