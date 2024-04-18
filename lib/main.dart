@@ -1,5 +1,6 @@
 import 'package:app_dsi/components/CustomRoundedIconButton.dart';
 import 'package:app_dsi/core/theme/color_schemes.dart';
+import 'package:app_dsi/screens/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         colorScheme: lightColorScheme,
       ),
-      home: const RegisterPage(),
+      home: const HomePage(),
     );
   }
 }
