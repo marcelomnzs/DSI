@@ -147,14 +147,14 @@ class RegisterPage extends StatelessWidget {
                   decoration: BoxDecoration(
                       color: lightColorScheme.primary,
                       borderRadius: BorderRadius.circular(34)),
-                  child: const Text(
-                    'Cadastrar-se',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14,
-                    ),
-                  ),
+                  child: Text('Cadastrar-se',
+                      style: GoogleFonts.poppins(
+                        textStyle: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14,
+                        ),
+                      )),
                 ),
               ),
             ),

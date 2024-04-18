@@ -3,9 +3,7 @@ import 'package:app_dsi/core/theme/color_schemes.dart';
 import 'package:app_dsi/screens/RegisterPage.dart';
 import 'package:app_dsi/screens/Splash.dart';
 import 'package:app_dsi/screens/home_page.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -130,12 +128,14 @@ class LoginPage extends StatelessWidget {
                   decoration: BoxDecoration(
                       color: lightColorScheme.primary,
                       borderRadius: BorderRadius.circular(34)),
-                  child: const Text(
+                  child: Text(
                     'Login',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14,
+                    style: GoogleFonts.poppins(
+                      textStyle: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
+                      ),
                     ),
                   ),
                 ),
@@ -152,7 +152,7 @@ class LoginPage extends StatelessWidget {
                   );
                 },
                 child: Text(
-                  'Não possue conta? Cadastre-se',
+                  'Não possui conta? Cadastre-se',
                   style: GoogleFonts.poppins(
                     textStyle: const TextStyle(
                       fontWeight: FontWeight.w300,
