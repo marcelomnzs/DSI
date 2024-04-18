@@ -1,3 +1,4 @@
+import 'package:app_dsi/screens/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -133,7 +134,12 @@ class RegisterPage extends StatelessWidget {
             const SizedBox(height: 6),
             Center(
               child: GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const HomePage()),
+                  );
+                },
                 child: Container(
                   alignment: Alignment.center,
                   padding: const EdgeInsets.fromLTRB(25, 15, 25, 15),
@@ -142,7 +148,7 @@ class RegisterPage extends StatelessWidget {
                       color: lightColorScheme.primary,
                       borderRadius: BorderRadius.circular(34)),
                   child: const Text(
-                    'Cadastra-se',
+                    'Cadastrar-se',
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
@@ -154,12 +160,17 @@ class RegisterPage extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             Center(
-              child: Text(
-                'já possue uma conta? faça login',
-                style: GoogleFonts.poppins(
-                  textStyle: const TextStyle(
-                    fontWeight: FontWeight.w300,
-                    fontSize: 10,
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Text(
+                  'Já possue uma conta? faça login',
+                  style: GoogleFonts.poppins(
+                    textStyle: const TextStyle(
+                      fontWeight: FontWeight.w300,
+                      fontSize: 10,
+                    ),
                   ),
                 ),
               ),

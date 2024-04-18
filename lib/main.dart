@@ -1,4 +1,6 @@
 import 'package:app_dsi/core/theme/color_schemes.dart';
+import 'package:app_dsi/screens/RegisterPage.dart';
+import 'package:app_dsi/screens/home_page.dart';
 import 'package:app_dsi/screens/login_page.dart';
 import 'package:flutter/material.dart';
 
@@ -19,7 +21,11 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         colorScheme: lightColorScheme,
       ),
-      home: const LoginPage(),
+      routes: {
+        '/': (context) => const LoginPage(),
+        '/homepage': (context) => const HomePage(),
+        '/registerpage': (context) => const RegisterPage(),
+      },
     );
   }
 }

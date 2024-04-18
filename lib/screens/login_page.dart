@@ -1,6 +1,11 @@
 import 'package:app_dsi/components/CustomRoundedIconButton.dart';
 import 'package:app_dsi/core/theme/color_schemes.dart';
+import 'package:app_dsi/screens/RegisterPage.dart';
+import 'package:app_dsi/screens/Splash.dart';
+import 'package:app_dsi/screens/home_page.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -89,12 +94,20 @@ class LoginPage extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Text(
-                    'Esqueci minha senha',
-                    style: GoogleFonts.poppins(
-                      textStyle: const TextStyle(
-                        fontSize: 10,
-                        fontWeight: FontWeight.w300,
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const Splash()),
+                      );
+                    },
+                    child: Text(
+                      'Esqueci minha senha',
+                      style: GoogleFonts.poppins(
+                        textStyle: const TextStyle(
+                          fontSize: 10,
+                          fontWeight: FontWeight.w300,
+                        ),
                       ),
                     ),
                   ),
@@ -104,7 +117,12 @@ class LoginPage extends StatelessWidget {
             const SizedBox(height: 6),
             Center(
               child: GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const HomePage()));
+                },
                 child: Container(
                   alignment: Alignment.center,
                   padding: const EdgeInsets.fromLTRB(25, 15, 25, 15),
@@ -125,12 +143,21 @@ class LoginPage extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             Center(
-              child: Text(
-                'Não possue conta? Cadastre-se',
-                style: GoogleFonts.poppins(
-                  textStyle: const TextStyle(
-                    fontWeight: FontWeight.w300,
-                    fontSize: 10,
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const RegisterPage()),
+                  );
+                },
+                child: Text(
+                  'Não possue conta? Cadastre-se',
+                  style: GoogleFonts.poppins(
+                    textStyle: const TextStyle(
+                      fontWeight: FontWeight.w300,
+                      fontSize: 10,
+                    ),
                   ),
                 ),
               ),
