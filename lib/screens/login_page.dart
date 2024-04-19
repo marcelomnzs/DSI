@@ -48,34 +48,13 @@ class LoginPage extends StatelessWidget {
             ),
             // const SizedBox(height: 10),
             SizedBox(
-              child: Text(
-                'E-mail:',
-                style: GoogleFonts.poppins(
-                  textStyle: const TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontSize: 18,
-                  ),
-                ),
-              ),
-            ),
-            const TextField(
-              decoration: InputDecoration(
-                prefixIcon: Icon(Icons.alternate_email_rounded),
-                hintText: 'Digite o seu endereço de e-mail',
-                hintStyle: TextStyle(
-                  fontSize: 10,
-                  color: Colors.grey,
-                ),
-              ),
-            ),
-            // const SizedBox(height: 10),
-            Padding(
-              padding: const EdgeInsets.only(top: 16.0),
-              child: SizedBox(
-                child: Text(
-                  'Senha:',
-                  style: GoogleFonts.poppins(
-                    textStyle: const TextStyle(
+              child: TextFormField(
+                decoration: InputDecoration(
+                  labelText: 'Email',
+                  prefixIcon: Icon(Icons.alternate_email),
+                  hintText: 'Digite seu email',
+                  labelStyle: GoogleFonts.poppins(
+                    textStyle: TextStyle(
                       fontWeight: FontWeight.w400,
                       fontSize: 18,
                     ),
@@ -83,20 +62,24 @@ class LoginPage extends StatelessWidget {
                 ),
               ),
             ),
-            const Column(
-              children: [
-                TextField(
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.lock),
-                    hintText: '**************',
-                    hintStyle: TextStyle(
-                      fontSize: 10,
-                      color: Colors.grey,
+            Padding(
+              padding: const EdgeInsets.only(top: 16.0),
+              child: SizedBox(
+                child: TextFormField(
+                 decoration: InputDecoration(
+                  labelText: 'Senha',
+                  prefixIcon: Icon(Icons.lock),
+                  hintText: '********',
+                  labelStyle:GoogleFonts.poppins(
+                    textStyle: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      fontSize: 18,
                     ),
                   ),
+                 ),
+                 obscureText: true,
                 ),
-              ],
+              ),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 16.0),
