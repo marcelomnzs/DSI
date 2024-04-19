@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:app_dsi/core/theme/color_schemes.dart';
 
 class RegisterPage extends StatelessWidget {
-  const RegisterPage({super.key});
+  const RegisterPage({Key? key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,39 +15,37 @@ class RegisterPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 30),
+            SizedBox(height: 30), // Adicionado espaço acima da imagem
             Flexible(
               child: FractionallySizedBox(
-                heightFactor: 0.60,
+                heightFactor: 0.9,
                 widthFactor: 1,
-                child: SvgPicture.asset('assets/svg/running-man-data.svg'),
-              ),
-            ),
-            SizedBox(
-              height: 50,
-              child: Text(
-                'Cadastro',
-                style: GoogleFonts.poppins(
-                  textStyle: const TextStyle(
-                    fontSize: 36,
-                    fontWeight: FontWeight.w900,
-                  ),
+                child: SvgPicture.asset(
+                  'assets/svg/running-man-data.svg',
                 ),
               ),
             ),
-            const SizedBox(height: 10),
-            SizedBox(
-              child: Text(
-                'Nome:',
-                style: GoogleFonts.poppins(
-                  textStyle: const TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontSize: 18,
-                  ),
+            SizedBox(height: 20), // Aumentado o espaço abaixo da imagem
+            Text(
+              'Cadastro',
+              style: GoogleFonts.poppins(
+                textStyle: TextStyle(
+                  fontSize: 36,
+                  fontWeight: FontWeight.w900,
                 ),
               ),
             ),
-            const TextField(
+            SizedBox(height: 20), // Adicionado espaço após o texto 'Cadastro'
+            Text(
+              'Nome:',
+              style: GoogleFonts.poppins(
+                textStyle: TextStyle(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 18,
+                ),
+              ),
+            ),
+            TextField(
               decoration: InputDecoration(
                 prefixIcon: Icon(Icons.account_circle),
                 hintText: 'Digite o seu nome',
@@ -57,46 +55,38 @@ class RegisterPage extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 10),
-            SizedBox(
-              child: Text(
-                'Email:',
-                style: GoogleFonts.poppins(
-                  textStyle: const TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontSize: 18,
-                  ),
+            SizedBox(height: 10), // Adicionado espaço após o campo 'Nome'
+            Text(
+              'Email:',
+              style: GoogleFonts.poppins(
+                textStyle: TextStyle(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 18,
                 ),
               ),
             ),
-            const Column(
-              children: [
-                TextField(
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.alternate_email),
-                    hintText: 'Digite seu endereço de e-mail',
-                    hintStyle: TextStyle(
-                      fontSize: 10,
-                      color: Colors.grey,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 10),
-            SizedBox(
-              child: Text(
-                'Senha:',
-                style: GoogleFonts.poppins(
-                  textStyle: const TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontSize: 18,
-                  ),
+            TextField(
+              obscureText: true,
+              decoration: InputDecoration(
+                prefixIcon: Icon(Icons.alternate_email),
+                hintText: 'Digite seu endereço de e-mail',
+                hintStyle: TextStyle(
+                  fontSize: 10,
+                  color: Colors.grey,
                 ),
               ),
             ),
-            const TextField(
+            SizedBox(height: 10), // Adicionado espaço após o campo 'Email'
+            Text(
+              'Senha:',
+              style: GoogleFonts.poppins(
+                textStyle: TextStyle(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 18,
+                ),
+              ),
+            ),
+            TextField(
               decoration: InputDecoration(
                 prefixIcon: Icon(Icons.lock),
                 hintText: '********',
@@ -106,19 +96,17 @@ class RegisterPage extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 10),
-            SizedBox(
-              child: Text(
-                'Confirmar Senha:',
-                style: GoogleFonts.poppins(
-                  textStyle: const TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontSize: 18,
-                  ),
+            SizedBox(height: 10), // Adicionado espaço após o campo 'Senha'
+            Text(
+              'Confirmar Senha:',
+              style: GoogleFonts.poppins(
+                textStyle: TextStyle(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 18,
                 ),
               ),
             ),
-            const TextField(
+            TextField(
               decoration: InputDecoration(
                 prefixIcon: Icon(Icons.lock),
                 hintText: '********',
@@ -128,10 +116,7 @@ class RegisterPage extends StatelessWidget {
                 ),
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 16.0),
-            ),
-            const SizedBox(height: 6),
+            SizedBox(height: 20), // Adicionado espaço após os campos de senha
             Center(
               child: GestureDetector(
                 onTap: () {
@@ -145,29 +130,32 @@ class RegisterPage extends StatelessWidget {
                   padding: const EdgeInsets.fromLTRB(25, 15, 25, 15),
                   margin: const EdgeInsets.symmetric(horizontal: 32),
                   decoration: BoxDecoration(
-                      color: lightColorScheme.primary,
-                      borderRadius: BorderRadius.circular(34)),
-                  child: Text('Cadastrar-se',
-                      style: GoogleFonts.poppins(
-                        textStyle: const TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14,
-                        ),
-                      )),
+                    color: lightColorScheme.primary,
+                    borderRadius: BorderRadius.circular(34),
+                  ),
+                  child: Text(
+                    'Cadastrar-se',
+                    style: GoogleFonts.poppins(
+                      textStyle: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 20), // Aumentado o espaço após o botão de cadastro
             Center(
               child: GestureDetector(
                 onTap: () {
                   Navigator.pop(context);
                 },
                 child: Text(
-                  'Já possue uma conta? faça login',
+                  'Já possui uma conta? Faça login',
                   style: GoogleFonts.poppins(
-                    textStyle: const TextStyle(
+                    textStyle: TextStyle(
                       fontWeight: FontWeight.w300,
                       fontSize: 10,
                     ),
@@ -175,8 +163,8 @@ class RegisterPage extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 16),
-            const Padding(
+            SizedBox(height: 20), // Aumentado o espaço após o texto de login
+            Padding(
               padding: EdgeInsets.only(bottom: 8.0),
               child: Row(
                 children: [
