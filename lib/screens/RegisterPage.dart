@@ -11,14 +11,17 @@ class RegisterPage extends StatelessWidget {
   final _formkey = GlobalKey<FormState>(); 
 
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+        child: Form( 
+          key: _formkey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
             SizedBox(height: 30), // Adicionado espaço acima da imagem
             Flexible(
               child: FractionallySizedBox(
@@ -53,7 +56,7 @@ class RegisterPage extends StatelessWidget {
                   ),
                 ),
               validator: (String? value) {
-                    if (value == null) {
+                    if (value == null || value.isEmpty) {
                       return 'O campo não pode ser vazio';
                     }
                     return null;
@@ -74,7 +77,7 @@ class RegisterPage extends StatelessWidget {
                   ),
                 ),
               validator: (String? value) {
-                if (value == null) {
+                if (value == null || value.isEmpty) {
                   return 'O campo não pode ser vazio';
                 }
                 if (value.length < 5) {
@@ -107,10 +110,16 @@ class RegisterPage extends StatelessWidget {
             obscureText: true,              
             validator: (String? value) {
               if (value == null || value.isEmpty) {
-                return 'Por favor, confirme sua senha';
+                return 'A senha não pode ser vazia';
               }
-              if (value != _passwordController.text) {
+              if (value.length < 6) {
                 return 'A senha deve conter 6 caracteres';
+              }
+              if (!value.contains(RegExp(r'[a-zA-Z]'))) {
+                return 'A senha deve conter pelo menos uma letra';
+              }
+              if (!value.contains(RegExp(r'[0-9]'))) { 
+                return 'A senha deve conter pelo menos um numero';
               }
                 return null;
               },
@@ -131,17 +140,11 @@ class RegisterPage extends StatelessWidget {
                   ),
             obscureText: true,              
             validator: (String? value) {
-              if (value == null) {
-                return 'A senha não pode ser vazia';
+              if (value == null || value.isEmpty) {
+                return 'Por favor, confirme sua senha';
               }
-              if (value.length < 6) {
-                return 'A senha deve conter 6 caracteres';
-              }
-              if (!value.contains(RegExp(r'[a-zA-Z]'))) {
-                return 'A senha deve conter pelo menos uma letra';
-              }
-              if (!value.contains(RegExp(r'[0-9]'))) { 
-                return 'A senha deve conter pelo menos um numero';
+              if (value != _passwordController.text) {
+                return 'Senha não confere';
               }
                 return null;
               },
@@ -150,7 +153,15 @@ class RegisterPage extends StatelessWidget {
             SizedBox(height: 20), // Adicionado espaço após os campos de senha
             Center(
               child: GestureDetector(
-                onTap: () 
+                onTap: () {
+                  // verificar formulario para proxima pagina
+                  if(_formkey.currentState!.validate()) {
+                    // se o formulario for valido, para proxima pagina 
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                      builder: (context) => const HomePage()));
+                   };
                 },
                 child: Container(
                   alignment: Alignment.center,
@@ -208,12 +219,13 @@ class RegisterPage extends StatelessWidget {
                     child: Divider(
                       thickness: 0.2,
                       color: Colors.grey,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

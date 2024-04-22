@@ -64,7 +64,7 @@ class LoginPage extends StatelessWidget {
                     ),
                   ),
                   validator: (String? value) {
-                    if (value == null) {
+                    if (value == null || value.isEmpty) {
                       return 'O campo não pode ser vazio';
                     }
                     if (value.length < 5) {
@@ -97,7 +97,7 @@ class LoginPage extends StatelessWidget {
                   ),
                   obscureText: true,              
                   validator: (String? value) {
-                    if (value == null) {
+                    if (value == null || value.isEmpty) {
                       return 'A senha não pode ser vazia';
                     }
                     if (value.length < 6) {
