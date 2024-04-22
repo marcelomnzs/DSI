@@ -73,6 +73,9 @@ class LoginPage extends StatelessWidget {
                     if (!value.contains('@')) {
                       return 'Email invalido';
                     }
+                    if (!value.contains('.com')) {
+                      return 'Email invalido';
+                    }
                     return null;
                   },              
                 ),
@@ -176,7 +179,7 @@ class LoginPage extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const RegisterPage()),
+                          builder: (context) =>  RegisterPage()),
                     );
                   },
                   child: Padding(

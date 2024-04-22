@@ -1,11 +1,15 @@
 import 'package:app_dsi/screens/home_page.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:app_dsi/core/theme/color_schemes.dart';
 
 class RegisterPage extends StatelessWidget {
-  const RegisterPage({Key? key});
+  RegisterPage({Key? key});
+  final TextEditingController _passwordController = TextEditingController();
+  final _formkey = GlobalKey<FormState>(); 
+
 
   @override
   Widget build(BuildContext context) {
@@ -35,95 +39,118 @@ class RegisterPage extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 20), // Adicionado espaço após o texto 'Cadastro'
-            Text(
-              'Nome:',
-              style: GoogleFonts.poppins(
-                textStyle: TextStyle(
-                  fontWeight: FontWeight.w400,
-                  fontSize: 18,
-                ),
-              ),
-            ),
-            TextField(
+            SizedBox( // Adicionado espaço após o texto 'Cadastro'
+            child: TextFormField(
               decoration: InputDecoration(
                 prefixIcon: Icon(Icons.account_circle),
-                hintText: 'Digite o seu nome',
-                hintStyle: TextStyle(
-                  fontSize: 10,
-                  color: Colors.grey,
+                labelText: 'Nome',
+                hintText: 'Digite seu nome',
+                labelStyle: GoogleFonts.poppins(
+                  textStyle: TextStyle(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 18,
+                    ),
+                  ),
                 ),
+              validator: (String? value) {
+                    if (value == null) {
+                      return 'O campo não pode ser vazio';
+                    }
+                    return null;
+                  },           
               ),
             ),
-            SizedBox(height: 10), // Adicionado espaço após o campo 'Nome'
-            Text(
-              'Email:',
-              style: GoogleFonts.poppins(
-                textStyle: TextStyle(
-                  fontWeight: FontWeight.w400,
-                  fontSize: 18,
-                ),
-              ),
-            ),
-            TextField(
-              obscureText: true,
-              decoration: InputDecoration(
+            SizedBox(        
+              child: TextFormField(
+                decoration: InputDecoration(
                 prefixIcon: Icon(Icons.alternate_email),
-                hintText: 'Digite seu endereço de e-mail',
-                hintStyle: TextStyle(
-                  fontSize: 10,
-                  color: Colors.grey,
+                labelText: 'Email',
+                hintText: 'Digite seu email',
+                labelStyle: GoogleFonts.poppins(
+                  textStyle: TextStyle(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 18,
+                    ),
+                  ),
                 ),
+              validator: (String? value) {
+                if (value == null) {
+                  return 'O campo não pode ser vazio';
+                }
+                if (value.length < 5) {
+                  return 'O email é invalido';
+                }
+                if (!value.contains('@')) {
+                  return 'Email invalido';
+                }
+                if (!value.contains('.com')) {
+                  return 'Email invalido';
+                }
+                return null;
+               },   
               ),
             ),
-            SizedBox(height: 10), // Adicionado espaço após o campo 'Email'
-            Text(
-              'Senha:',
-              style: GoogleFonts.poppins(
+            SizedBox( 
+            child: TextFormField(
+              controller: _passwordController,
+              decoration: InputDecoration(
+              prefixIcon: Icon(Icons.lock),
+              labelText: 'Senha',
+              hintText: '********',
+              labelStyle:GoogleFonts.poppins(
                 textStyle: TextStyle(
                   fontWeight: FontWeight.w400,
                   fontSize: 18,
-                ),
+                      ),
+                    ),
+                  ),
+            obscureText: true,              
+            validator: (String? value) {
+              if (value == null || value.isEmpty) {
+                return 'Por favor, confirme sua senha';
+              }
+              if (value != _passwordController.text) {
+                return 'A senha deve conter 6 caracteres';
+              }
+                return null;
+              },
               ),
             ),
-            TextField(
+            SizedBox( // Adicionado espaço após o campo 'Senha'
+            child: TextFormField(
               decoration: InputDecoration(
-                prefixIcon: Icon(Icons.lock),
-                hintText: '********',
-                hintStyle: TextStyle(
-                  fontSize: 10,
-                  color: Colors.grey,
-                ),
-              ),
-            ),
-            SizedBox(height: 10), // Adicionado espaço após o campo 'Senha'
-            Text(
-              'Confirmar Senha:',
-              style: GoogleFonts.poppins(
+              prefixIcon: Icon(Icons.lock),
+              labelText: 'Confirmar senha',
+              hintText: '********',
+              labelStyle:GoogleFonts.poppins(
                 textStyle: TextStyle(
                   fontWeight: FontWeight.w400,
                   fontSize: 18,
-                ),
-              ),
-            ),
-            TextField(
-              decoration: InputDecoration(
-                prefixIcon: Icon(Icons.lock),
-                hintText: '********',
-                hintStyle: TextStyle(
-                  fontSize: 10,
-                  color: Colors.grey,
-                ),
+                      ),
+                    ),
+                  ),
+            obscureText: true,              
+            validator: (String? value) {
+              if (value == null) {
+                return 'A senha não pode ser vazia';
+              }
+              if (value.length < 6) {
+                return 'A senha deve conter 6 caracteres';
+              }
+              if (!value.contains(RegExp(r'[a-zA-Z]'))) {
+                return 'A senha deve conter pelo menos uma letra';
+              }
+              if (!value.contains(RegExp(r'[0-9]'))) { 
+                return 'A senha deve conter pelo menos um numero';
+              }
+                return null;
+              },
               ),
             ),
             SizedBox(height: 20), // Adicionado espaço após os campos de senha
             Center(
               child: GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const HomePage()),
-                  );
+                onTap: () 
                 },
                 child: Container(
                   alignment: Alignment.center,
