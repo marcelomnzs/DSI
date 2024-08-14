@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "741821520665",
+    "project_id": "dsi-heart",
+    "storage_bucket": "dsi-heart.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:741821520665:android:2a986ecac4f79ed0858388",
+        "android_client_info": {
+          "package_name": "com.bsi.heart_dsi"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQvlxPBQ_7_XSxFeBQ__DRICTaGovc-rk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

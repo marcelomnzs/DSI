@@ -1,5 +1,6 @@
-import 'package:app_dsi/components/ExerciseCard_HomePage.dart';
 import 'package:app_dsi/core/theme/color_schemes.dart';
+import 'package:app_dsi/services/firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
@@ -12,59 +13,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  // List of exercises
-  List myExercises = [
-    [
-      'Caminhada',
-      40,
-      DateTime.now(),
-      const Icon(
-        Icons.directions_run,
-        size: 45,
-        color: Colors.white,
-      )
-    ],
-    [
-      'Caiaque',
-      120,
-      DateTime.now(),
-      const Icon(
-        Icons.kayaking,
-        size: 45,
-        color: Colors.white,
-      )
-    ],
-    [
-      'Academia',
-      60,
-      DateTime.now(),
-      const Icon(
-        Icons.fitness_center,
-        size: 45,
-        color: Colors.white,
-      )
-    ],
-    [
-      'Futebol',
-      90,
-      DateTime.now(),
-      const Icon(
-        Icons.sports_soccer,
-        size: 45,
-        color: Colors.white,
-      )
-    ],
-    [
-      'Surf',
-      130,
-      DateTime.now(),
-      const Icon(
-        Icons.surfing,
-        size: 45,
-        color: Colors.white,
-      )
-    ],
-  ];
+// Creating firestore instance
+  final FirestoreService firestoreService = FirestoreService();
 
   @override
   Widget build(BuildContext context) {
@@ -96,38 +46,34 @@ class _HomePageState extends State<HomePage> {
             ),
 
             // Welcome home User
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 40.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Bem vindo de Volta,',
-                    style: GoogleFonts.poppins(),
-                  ),
-                  Text(
-                    'Fulano!',
-                    style: GoogleFonts.poppins(
-                      textStyle: const TextStyle(
-                        fontSize: 40,
-                        fontWeight: FontWeight.w800,
-                      ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Bem vindo de Volta,',
+                  style: GoogleFonts.poppins(),
+                ),
+                Text(
+                  'Fulano!',
+                  style: GoogleFonts.poppins(
+                    textStyle: const TextStyle(
+                      fontSize: 40,
+                      fontWeight: FontWeight.w800,
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
 
-            const SizedBox(height: 30),
+            const SizedBox(height: 10),
 
             // Grid
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 40.0),
-              child: Text(
-                'Meus compromissos',
-                style: GoogleFonts.poppins(
-                  textStyle: const TextStyle(
-                      fontSize: 20, fontWeight: FontWeight.w300),
+            Text(
+              'Meus compromissos',
+              style: GoogleFonts.poppins(
+                textStyle: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w300,
                 ),
               ),
             ),
@@ -135,18 +81,52 @@ class _HomePageState extends State<HomePage> {
             Expanded(
               child: FractionallySizedBox(
                 widthFactor: 0.8,
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: myExercises.length,
-                  padding: const EdgeInsets.all(25),
-                  itemBuilder: (context, index) {
-                    return ExerciseCard_HomePage(
-                      name: myExercises[index][0],
-                      duration: myExercises[index][1],
-                      date: myExercises[index][2],
-                      icon: myExercises[index][3],
-                    );
-                  },
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 15.0),
+                  child: StreamBuilder<QuerySnapshot>(
+                    stream: firestoreService.getExerciseStream(),
+                    builder: (context, snapshot) {
+                      // If we have data, get all the docs
+                      if (snapshot.hasData) {
+                        List exercisesList = snapshot.data!.docs;
+
+                        // Display the data as a list
+                        return ListView.builder(
+                          itemCount: exercisesList.length,
+                          itemBuilder: (context, index) {
+                            // Get individual doc
+                            DocumentSnapshot document = exercisesList[index];
+                            String docID = document.id;
+
+                            // Get exercise from each doc
+                            Map<String, dynamic> data =
+                                document.data() as Map<String, dynamic>;
+                            String exerciseType = data['type'];
+
+                            // Display as a list tile
+                            return ListTile(
+                              title: Text(exerciseType.toUpperCase()),
+                              trailing: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  IconButton(
+                                    onPressed: () {},
+                                    icon: const Icon(Icons.edit),
+                                  ),
+                                  IconButton(
+                                    onPressed: () {},
+                                    icon: const Icon(Icons.delete),
+                                  )
+                                ],
+                              ),
+                            );
+                          },
+                        );
+                      } else {
+                        return const Text('No notes...');
+                      }
+                    },
+                  ),
                 ),
               ),
             ),
@@ -154,11 +134,11 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       bottomNavigationBar: Container(
-        color: lightColorScheme.onBackground,
+        color: lightColorScheme.onSurface,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
           child: GNav(
-            backgroundColor: lightColorScheme.onBackground,
+            backgroundColor: lightColorScheme.onSurface,
             color: Colors.white,
             activeColor: Colors.white,
             tabBackgroundColor: const Color.fromARGB(174, 184, 29, 37),
