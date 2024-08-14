@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
         colorScheme: lightColorScheme,
       ),
       routes: {
-        '/': (context) => const HomePage(),
+        '/': (context) =>   LoginPage(),
         '/homepage': (context) => const HomePage(),
         '/registerpage': (context) => RegisterPage(),
         '/loginpage': (context) => LoginPage(),

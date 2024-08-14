@@ -71,4 +71,5 @@ class DefaultFirebaseOptions {
     authDomain: 'dsi-heart.firebaseapp.com',
     storageBucket: 'dsi-heart.appspot.com',
   );
+
 }

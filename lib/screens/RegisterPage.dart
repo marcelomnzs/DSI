@@ -4,12 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:app_dsi/core/theme/color_schemes.dart';
+import 'package:app_dsi/services/autenticacao.dart'; // Verifique o caminho
+
 
 class RegisterPage extends StatelessWidget {
   RegisterPage({Key? key});
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _nomeController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();  
   final _formkey = GlobalKey<FormState>(); 
+  
 
+  AutenticacaoServico _autenticaServico = AutenticacaoServico();
 
 
   @override
@@ -44,6 +50,7 @@ class RegisterPage extends StatelessWidget {
             ),
             SizedBox( // Adicionado espaço após o texto 'Cadastro'
             child: TextFormField(
+              controller: _nomeController,
               decoration: InputDecoration(
                 prefixIcon: Icon(Icons.account_circle),
                 labelText: 'Nome',
@@ -65,6 +72,7 @@ class RegisterPage extends StatelessWidget {
             ),
             SizedBox(        
               child: TextFormField(
+                controller: _emailController,
                 decoration: InputDecoration(
                 prefixIcon: Icon(Icons.alternate_email),
                 labelText: 'Email',
@@ -154,6 +162,7 @@ class RegisterPage extends StatelessWidget {
             Center(
               child: GestureDetector(
                 onTap: () {
+                  botao();
                   // verificar formulario para proxima pagina
                   if(_formkey.currentState!.validate()) {
                     // se o formulario for valido, para proxima pagina 
@@ -188,6 +197,7 @@ class RegisterPage extends StatelessWidget {
             Center(
               child: GestureDetector(
                 onTap: () {
+                
                   Navigator.pop(context);
                 },
                 child: Text(
@@ -230,4 +240,21 @@ class RegisterPage extends StatelessWidget {
       ),
     );
   }
+// para visualizar se os dados estão sendo recebidos corretamentes e mandar para o firestore
+  botao() {
+    String nome = _nomeController.text;
+    String senha = _passwordController.text;
+    String email = _emailController.text;
+
+    if (_formkey.currentState!.validate()) {
+      print('Cadastro válido');
+      print('Email: ${_emailController.text}, Nome: ${_nomeController.text}, Senha: ${_passwordController.text}');
+            _autenticaServico.cadastrarUsuario(nome: nome, senha: senha, email: email);
+    } else {
+      print('Inválido');
+    }
+  }
+
+
+
 }
