@@ -1,9 +1,9 @@
 import 'package:app_dsi/core/theme/color_schemes.dart';
-import 'package:app_dsi/services/firestore.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:app_dsi/screens/new_exercise_page.dart';
+import 'package:app_dsi/screens/profile_page.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:app_dsi/screens/exercises_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -13,126 +13,21 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-// Creating firestore instance
-  final FirestoreService firestoreService = FirestoreService();
+  // List of pages for the bottomNavBar
+  final List<Widget> _pages = [
+    Exercises(),
+    const NewExercise(),
+    const Profile()
+  ];
+
+  // Index for bottomNavBar
+  int _selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey.shade300,
-      body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            // Custom appBar
-            const Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: 40.0,
-                vertical: 25,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Icon(
-                    Icons.menu,
-                    size: 35,
-                  ),
-                  Icon(
-                    Icons.person,
-                    size: 35,
-                  )
-                ],
-              ),
-            ),
-
-            // Welcome home User
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Bem vindo de Volta,',
-                  style: GoogleFonts.poppins(),
-                ),
-                Text(
-                  'Fulano!',
-                  style: GoogleFonts.poppins(
-                    textStyle: const TextStyle(
-                      fontSize: 40,
-                      fontWeight: FontWeight.w800,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-
-            const SizedBox(height: 10),
-
-            // Grid
-            Text(
-              'Meus compromissos',
-              style: GoogleFonts.poppins(
-                textStyle: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w300,
-                ),
-              ),
-            ),
-
-            Expanded(
-              child: FractionallySizedBox(
-                widthFactor: 0.8,
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 15.0),
-                  child: StreamBuilder<QuerySnapshot>(
-                    stream: firestoreService.getExerciseStream(),
-                    builder: (context, snapshot) {
-                      // If we have data, get all the docs
-                      if (snapshot.hasData) {
-                        List exercisesList = snapshot.data!.docs;
-
-                        // Display the data as a list
-                        return ListView.builder(
-                          itemCount: exercisesList.length,
-                          itemBuilder: (context, index) {
-                            // Get individual doc
-                            DocumentSnapshot document = exercisesList[index];
-                            String docID = document.id;
-
-                            // Get exercise from each doc
-                            Map<String, dynamic> data =
-                                document.data() as Map<String, dynamic>;
-                            String exerciseType = data['type'];
-
-                            // Display as a list tile
-                            return ListTile(
-                              title: Text(exerciseType.toUpperCase()),
-                              trailing: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  IconButton(
-                                    onPressed: () {},
-                                    icon: const Icon(Icons.edit),
-                                  ),
-                                  IconButton(
-                                    onPressed: () {},
-                                    icon: const Icon(Icons.delete),
-                                  )
-                                ],
-                              ),
-                            );
-                          },
-                        );
-                      } else {
-                        return const Text('No notes...');
-                      }
-                    },
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
+      body: _pages[_selectedIndex],
       bottomNavigationBar: Container(
         color: lightColorScheme.onSurface,
         child: Padding(
@@ -141,7 +36,7 @@ class _HomePageState extends State<HomePage> {
             backgroundColor: lightColorScheme.onSurface,
             color: Colors.white,
             activeColor: Colors.white,
-            tabBackgroundColor: const Color.fromARGB(174, 184, 29, 37),
+            tabBackgroundColor: lightColorScheme.primary,
             gap: 8,
             padding: const EdgeInsets.all(16),
             tabs: const [
@@ -154,14 +49,16 @@ class _HomePageState extends State<HomePage> {
                 text: 'Novo exercício',
               ),
               GButton(
-                icon: Icons.fitness_center,
-                text: 'Meus exercícios',
-              ),
-              GButton(
                 icon: Icons.person,
                 text: 'Meu Perfil',
               ),
             ],
+            selectedIndex: _selectedIndex,
+            onTabChange: (index) {
+              setState(() {
+                _selectedIndex = index;
+              });
+            },
           ),
         ),
       ),
