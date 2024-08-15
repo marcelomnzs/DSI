@@ -123,7 +123,7 @@ class LoginPage extends StatelessWidget {
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => const Splash()),
+                          MaterialPageRoute(builder: (context) => const Splash(nextRoute: '/registerpage')),
                         );
                       },
                       child: Text(
@@ -149,7 +149,9 @@ class LoginPage extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const HomePage()));
+                            builder: (context) => const Splash(nextRoute: '/homepage'),
+                          ),
+                      );
                    };
                   },
                   child: Container(
@@ -179,7 +181,8 @@ class LoginPage extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) =>  RegisterPage()),
+                          builder: (context) => const Splash(nextRoute: '/registerpage'),
+                      ),
                     );
                   },
                   child: Padding(
