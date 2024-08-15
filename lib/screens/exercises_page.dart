@@ -59,7 +59,9 @@ class _ExercisesState extends State<Exercises> {
                         icon: const Icon(Icons.edit),
                       ),
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          firestoreService.deleteExercise(docID);
+                        },
                         icon: const Icon(Icons.delete),
                       )
                     ],

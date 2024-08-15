@@ -29,5 +29,9 @@ class FirestoreService {
       'timestamp': newTimestamp,
     });
   }
+
   // Delete - Delete exercise given a doc id
+  Future<void> deleteExercise(String docID) {
+    return exercises.doc(docID).delete();
+  }
 }
