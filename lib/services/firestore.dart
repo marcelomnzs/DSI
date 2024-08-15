@@ -22,6 +22,12 @@ class FirestoreService {
   }
 
   // Update - Update exercise given a doc id
-
+  Future<void> updateExercise(
+      String docID, String newType, Timestamp newTimestamp) {
+    return exercises.doc(docID).update({
+      'type': newType,
+      'timestamp': newTimestamp,
+    });
+  }
   // Delete - Delete exercise given a doc id
 }

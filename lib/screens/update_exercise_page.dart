@@ -4,14 +4,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class NewExercise extends StatefulWidget {
-  const NewExercise({super.key});
+class UpdateExercisePage extends StatefulWidget {
+  final String docID;
+
+  const UpdateExercisePage({super.key, required this.docID});
 
   @override
-  State<NewExercise> createState() => _NewExerciseState();
+  State<UpdateExercisePage> createState() => _UpdateExercisePageState();
 }
 
-class _NewExerciseState extends State<NewExercise> {
+class _UpdateExercisePageState extends State<UpdateExercisePage> {
   // Firestore instance
   final FirestoreService firestoreService = FirestoreService();
 
@@ -24,12 +26,13 @@ class _NewExerciseState extends State<NewExercise> {
 
   @override
   Widget build(BuildContext context) {
+    // Hours and minutes utils
     final String hours = dateTime.hour.toString().padLeft(2, '0');
     final String minutes = dateTime.hour.toString().padLeft(2, '0');
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Novo Exercício'),
+        title: const Text('Editar Exercício'),
         centerTitle: true,
       ),
       body: Padding(
@@ -41,8 +44,8 @@ class _NewExerciseState extends State<NewExercise> {
             TextFormField(
               controller: _textController,
               decoration: InputDecoration(
-                labelText: 'Adicione um exercício',
-                hintText: 'Ex: Caminhada',
+                labelText: 'Edite o exercício',
+                hintText: 'Ex: Novo título',
                 suffix: IconButton(
                   onPressed: () {
                     _textController.clear();
@@ -115,8 +118,8 @@ class _NewExerciseState extends State<NewExercise> {
                 child: MaterialButton(
                   onPressed: () {
                     final Timestamp timestamp = Timestamp.fromDate(dateTime);
-                    firestoreService.addExercise(
-                        _textController.text, timestamp);
+                    firestoreService.updateExercise(
+                        widget.docID, _textController.text, timestamp);
 
                     // UI improvent
                     _textController.clear();

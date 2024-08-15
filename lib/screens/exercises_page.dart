@@ -1,3 +1,4 @@
+import 'package:app_dsi/screens/update_exercise_page.dart';
 import 'package:app_dsi/services/firestore.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +26,6 @@ class _ExercisesState extends State<Exercises> {
         builder: (context, snapshot) {
           // If we have data, get all the docs
           if (snapshot.hasData) {
-            print('Tem data aqui');
             List exercisesList = snapshot.data!.docs;
 
             // Display the data as a list
@@ -48,7 +48,14 @@ class _ExercisesState extends State<Exercises> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => UpdateExercisePage(docID: docID),
+                            ),
+                          );
+                        },
                         icon: const Icon(Icons.edit),
                       ),
                       IconButton(
