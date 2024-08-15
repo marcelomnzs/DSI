@@ -24,6 +24,13 @@ class HomePage extends StatelessWidget {
                   Navigator.pushNamed(context, '/newexercise');
                 },
               ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                child: const Text('Voltar'),
+                onPressed: () {
+                  Navigator.pushNamed(context, '/loginpage');
+                },
+              ),
             ],
           ),
         ));
