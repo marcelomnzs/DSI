@@ -4,6 +4,7 @@ import 'package:app_dsi/screens/RegisterPage.dart';
 import 'package:app_dsi/screens/Splash.dart';
 import 'package:app_dsi/screens/home_page.dart';
 import 'package:app_dsi/services/autenticacao.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -70,15 +71,15 @@ class LoginPage extends StatelessWidget {
                     ),
                   ),
                   validator: (String? value) {
-                  if (value == null || value.isEmpty) {
-                    return 'O campo não pode ser vazio';
-                  }
-                  // Expressão regular para validar o formato do e-mail
-                  final emailRegExp = RegExp(r'^[^\s@]+@[^\s@]+\.[^\s@]+$');
-                  if (!emailRegExp.hasMatch(value)) {
-                    return 'Email inválido';
-                  }
-                  return null;
+                    if (value == null || value.isEmpty) {
+                      return 'O campo não pode ser vazio';
+                    }
+                    // Expressão regular para validar o formato do e-mail
+                    final emailRegExp = RegExp(r'^[^\s@]+@[^\s@]+\.[^\s@]+$');
+                    if (!emailRegExp.hasMatch(value)) {
+                      return 'Email inválido';
+                    }
+                    return null;
                   },
                 ),
               ),
@@ -151,23 +152,24 @@ class LoginPage extends StatelessWidget {
                     // Pegue os valores dos campos
                     String email = _emailController.text;
                     String senha = _passwordController.text;
-                    
+
                     // Verificar se o formulário é válido
                     if (_formkey.currentState!.validate()) {
-                      _autenticaServico.logarUsuario(email: email, senha: senha).then(
-                        (String? erro) {
+                      _autenticaServico
+                          .logarUsuario(email: email, senha: senha)
+                          .then((String? erro) {
                         if (erro != null) {
                           // Mostrar mensagem de erro
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                             content: Text('Erro4: $erro'),
                           ));
-                        } 
-                        else {
+                        } else {
                           // Navegar para a próxima página se não houver erro
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const Splash(nextRoute: '/homepage'),
+                              builder: (context) =>
+                                  const Splash(nextRoute: '/homepage'),
                             ),
                           );
                         }
@@ -257,11 +259,25 @@ class LoginPage extends StatelessWidget {
                   ],
                 ),
               ),
-              const Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   CustomRoundedIconButton(
-                      imagePath: 'assets/images/google-logo.png'),
+                    imagePath: 'assets/images/google-logo.png',
+                    onTap: () async {
+                      print('oii');
+                      // Código a ser executado quando o botão for clicado
+                      final AutenticacaoServico auth = AutenticacaoServico();
+                      UserCredential? userCredential =
+                          await auth.logarComGoogle();
+                      if (userCredential != null) {
+                        print(
+                            'Usuário logado: ${userCredential.user?.displayName}');
+                      } else {
+                        print('Falha ao logar com Google');
+                      }
+                    },
+                  ),
                   SizedBox(
                     width: 23,
                   ),
