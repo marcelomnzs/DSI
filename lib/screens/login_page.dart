@@ -271,8 +271,7 @@ class LoginPage extends StatelessWidget {
                       UserCredential? userCredential =
                           await auth.logarComGoogle();
                       if (userCredential != null) {
-                        print(
-                            'Usuário logado: ${userCredential.user?.displayName}');
+                        userCredential.user?.displayName;
                       } else {
                         print('Falha ao logar com Google');
                       }

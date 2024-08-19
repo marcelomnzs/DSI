@@ -5,35 +5,48 @@ class AutenticacaoServico {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
-  cadastrarUsuario({
+  // Método para cadastrar um novo usuário com e-mail e senha
+  Future<void> cadastrarUsuario({
     required String nome,
     required String senha,
     required String email,
-  }) {
-    _firebaseAuth.createUserWithEmailAndPassword(
-      email: email,
-      password: senha,
-    );
+  }) async {
+    try {
+      await _firebaseAuth.createUserWithEmailAndPassword(
+        email: email,
+        password: senha,
+      );
+    } on FirebaseAuthException catch (e) {
+      print('Erro ao cadastrar usuário: ${e.message}');
+    }
   }
 
-  Future<String?> logarUsuario({required String email, required senha}) async {
+  // Método para logar um usuário com e-mail e senha
+  Future<String?> logarUsuario({required String email, required String senha}) async {
     try {
       await _firebaseAuth.signInWithEmailAndPassword(
-          email: email, password: senha);
+        email: email,
+        password: senha,
+      );
       return null;
     } on FirebaseAuthException catch (e) {
       return e.message;
     }
   }
-// Método para logar um usuário com Google
+
+  // Método para logar um usuário com Google
   Future<UserCredential?> logarComGoogle() async {
     try {
+      print('Iniciando autenticação com Google');
+
       // Faz o login com a conta do Google
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
       if (googleUser == null) {
-        return null; // Se o usuário cancelar o login
+        print('O usuário cancelou a autenticação.');
+        return null; // Usuário cancelou o login
       }
 
+      // Obtém a autenticação do Google
       final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
 
       // Cria uma credencial do Firebase com o token do Google
@@ -43,13 +56,10 @@ class AutenticacaoServico {
       );
 
       // Loga o usuário no Firebase com a credencial do Google
-      UserCredential userCredential = await _firebaseAuth.signInWithCredential(credential);
-      return userCredential;
+      return await _firebaseAuth.signInWithCredential(credential);
     } on FirebaseAuthException catch (e) {
-      print('Erro ao logar com Google: ${e.message}');
+      print('Erro ao autenticar com Google: ${e.message}');
       return null;
     }
   }
-
-
 }
