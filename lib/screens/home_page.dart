@@ -28,6 +28,13 @@ class HomePage extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             ElevatedButton(
+              child: const Text('Adicionar suplemento'),
+              onPressed: () {
+                Navigator.pushNamed(context, '/suplemento');
+              },
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
               child: const Text('Voltar'),
               onPressed: () {
                 // Navega para a tela de splash antes de ir para a página de login

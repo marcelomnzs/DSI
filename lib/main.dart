@@ -7,6 +7,7 @@ import 'package:app_dsi/screens/login_page.dart';
 import 'package:app_dsi/screens/new_exercise_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:app_dsi/screens/suplemento.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,6 +34,7 @@ class MyApp extends StatelessWidget {
         '/loginpage': (context) =>  LoginPage(),
         '/exercises': (context) => const Exercises(),
         '/newexercise': (context) => const NewExercise(),
+        '/suplemento': (context) => const Suplemento(),
       },
     );
   }
