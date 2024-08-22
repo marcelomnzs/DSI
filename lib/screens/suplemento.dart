@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class Suplemento extends StatefulWidget {
   const Suplemento({super.key});
@@ -14,22 +15,10 @@ class _SuplementoState extends State<Suplemento> {
   final TextEditingController _dataController = TextEditingController();
   final TextEditingController _horaController = TextEditingController();
 
-  String? name;
-  String? descricao;
-  double? quantidade;
-
-  void getName(String name) {
-    this.name = name;
-  }
-
-  void getDescricao(String descricao) {
-    this.descricao = descricao;
-  }
-
-  void getQuantidade(String quantidadeStr) {
-    // Converta a String para double e atribua à variável
-    double? quantidade = double.tryParse(quantidadeStr);
-    this.quantidade = quantidade;
+  void _adicionarSuplemento() {
+    // Adicione sua lógica para processar os dados do suplemento aqui
+    // Por exemplo, você pode salvar os dados ou fazer uma navegação
+    Navigator.pushNamed(context, '/homepage'); // Altere o nome da rota conforme necessário
   }
 
   @override
@@ -38,11 +27,11 @@ class _SuplementoState extends State<Suplemento> {
       appBar: AppBar(
         title: const Text("Novo Suplemento"),
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextFormField(
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            TextFormField(
               decoration: const InputDecoration(
                 labelText: "Nome suplemento",
                 fillColor: Colors.white,
@@ -54,13 +43,10 @@ class _SuplementoState extends State<Suplemento> {
                 ),
               ),
               onChanged: (String name) {
-                getName(name); // Ação ao alterar o texto
+                // Aqui você pode definir a lógica para atualizar o estado, se necessário
               },
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
+            Row(
               children: [
                 Expanded(
                   flex: 2,
@@ -80,9 +66,6 @@ class _SuplementoState extends State<Suplemento> {
                     inputFormatters: <TextInputFormatter>[
                       FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}'))
                     ],
-                    onChanged: (String quantidade) {
-                      getQuantidade(quantidade); // Ação ao alterar a quantidade
-                    },
                   ),
                 ),
                 const SizedBox(width: 10),
@@ -100,17 +83,11 @@ class _SuplementoState extends State<Suplemento> {
                         ),
                       ),
                     ),
-                    onChanged: (String descricao) {
-                      getDescricao(descricao); // Ação ao alterar a descrição
-                    },
                   ),
                 ),
               ],
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
+            Row(
               children: [
                 Expanded(
                   flex: 2,
@@ -176,9 +153,33 @@ class _SuplementoState extends State<Suplemento> {
                 ),
               ],
             ),
-          ),
-          
-        ],
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 16.0),
+                child: ElevatedButton(
+                  onPressed: () {
+                    // Chame a lógica de adicionar suplemento e navegue
+                    _adicionarSuplemento();
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color.fromARGB(255, 206, 7, 34), // Cor do botão
+                    padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+                  ),
+                  child: Text(
+                    'Adicionar',
+                    style: GoogleFonts.poppins(
+                      textStyle: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
