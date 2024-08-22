@@ -1,5 +1,6 @@
 import 'package:app_dsi/core/theme/color_schemes.dart';
 import 'package:app_dsi/firebase_options.dart';
+import 'package:app_dsi/screens/ForgotPassword.dart';
 import 'package:app_dsi/screens/RegisterPage.dart';
 import 'package:app_dsi/screens/exercises_page.dart';
 import 'package:app_dsi/screens/home_page.dart';
@@ -35,6 +36,7 @@ class MyApp extends StatelessWidget {
         '/exercises': (context) => const Exercises(),
         '/newexercise': (context) => const NewExercise(),
         '/suplemento': (context) => const Suplemento(),
+        '/forgotPassword': (context) =>  ForgotPassword(),
       },
     );
   }

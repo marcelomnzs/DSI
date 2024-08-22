@@ -129,7 +129,7 @@ class LoginPage extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                  const Splash(nextRoute: '/registerpage')),
+                                  const Splash(nextRoute: '/forgotPassword')),
                         );
                       },
                       child: Text(
