@@ -36,6 +36,19 @@ class FirestoreService {
     return exercisesStream;
   }
 
+  // Read - Get exercises from the database
+  Stream<QuerySnapshot> getFirstFiveExercisesStream({required String userId}) {
+    final exercisesStream = _firestore
+        .collection('users')
+        .doc(userId)
+        .collection('exercises')
+        .limit(5)
+        .orderBy('type', descending: true)
+        .snapshots();
+
+    return exercisesStream;
+  }
+
   // Update - Update exercise given a doc id
   Future<void> updateExercise({
     required String userId,

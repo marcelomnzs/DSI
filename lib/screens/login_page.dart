@@ -1,8 +1,6 @@
 import 'package:app_dsi/components/CustomRoundedIconButton.dart';
 import 'package:app_dsi/core/theme/color_schemes.dart';
-import 'package:app_dsi/screens/RegisterPage.dart';
 import 'package:app_dsi/screens/Splash.dart';
-import 'package:app_dsi/screens/home_page.dart';
 import 'package:app_dsi/services/autenticacao.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
