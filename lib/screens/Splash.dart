@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class Splash extends StatelessWidget {
-  final String nextRoute; // Adicionando o parâmetro nextRoute
+  final String? nextRoute; // Adicionando o parâmetro nextRoute
 
   const Splash({super.key, required this.nextRoute}); // Construtor atualizado
 
@@ -11,7 +11,7 @@ class Splash extends StatelessWidget {
   Widget build(BuildContext context) {
     // Tempo que a tela de splash ficará visível (por exemplo, 3 segundos)
     Future.delayed(Duration(seconds: 3), () {
-      Navigator.pushReplacementNamed(context, nextRoute); // Redirecionamento
+      Navigator.pushReplacementNamed(context, nextRoute!); // Redirecionamento
     });
 
     return Scaffold(

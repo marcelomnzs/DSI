@@ -2,10 +2,12 @@ import 'package:app_dsi/core/theme/color_schemes.dart';
 import 'package:app_dsi/firebase_options.dart';
 import 'package:app_dsi/screens/ForgotPassword.dart';
 import 'package:app_dsi/screens/RegisterPage.dart';
+import 'package:app_dsi/screens/Splash.dart';
 import 'package:app_dsi/screens/exercises_page.dart';
 import 'package:app_dsi/screens/home_page.dart';
 import 'package:app_dsi/screens/login_page.dart';
 import 'package:app_dsi/screens/new_exercise_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:app_dsi/screens/suplemento.dart';
@@ -29,14 +31,38 @@ class MyApp extends StatelessWidget {
         colorScheme: lightColorScheme,
       ),
       routes: {
-        '/': (context) => const HomePage(),
         '/homepage': (context) => const HomePage(),
-        '/registerpage': (context) =>  RegisterPage(),
-        '/loginpage': (context) =>  LoginPage(),
+        '/registerpage': (context) => RegisterPage(),
+        '/loginpage': (context) => LoginPage(),
         '/exercises': (context) => const Exercises(),
         '/newexercise': (context) => const NewExercise(),
         '/suplemento': (context) => const Suplemento(),
-        '/forgotPassword': (context) =>  ForgotPassword(),
+        '/forgotPassword': (context) => ForgotPassword(),
+      },
+      home: const AuthCheck(),
+    );
+  }
+}
+
+class AuthCheck extends StatelessWidget {
+  const AuthCheck({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<User?>(
+      stream: FirebaseAuth.instance.userChanges(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Splash(
+            nextRoute: null,
+          );
+        } else {
+          if (snapshot.hasData) {
+            return const HomePage();
+          } else {
+            return LoginPage();
+          }
+        }
       },
     );
   }
