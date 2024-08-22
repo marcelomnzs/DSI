@@ -45,6 +45,10 @@ class AutenticacaoServico {
     }
   }
 
+  Future<void> deslogarUsuario() async {
+    await _firebaseAuth.signOut();
+  }
+
   // Método para logar um usuário com Google
   Future<UserCredential?> logarComGoogle() async {
     try {

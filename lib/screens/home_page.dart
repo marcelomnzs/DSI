@@ -1,10 +1,16 @@
 // lib/screens/home_page.dart
+import 'package:app_dsi/services/autenticacao.dart';
 import 'package:flutter/material.dart';
-import 'package:app_dsi/screens/splash.dart'; // Certifique-se de que o caminho está correto
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final AutenticacaoServico autenticacao = AutenticacaoServico();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,17 +41,10 @@ class HomePage extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             ElevatedButton(
-              child: const Text('Voltar'),
-              onPressed: () {
-                // Navega para a tela de splash antes de ir para a página de login
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => Splash(nextRoute: '/loginpage'),
-                  ),
-                );
-              },
-            ),
+                onPressed: () async {
+                  await autenticacao.deslogarUsuario();
+                },
+                child: const Text('Sair')),
           ],
         ),
       ),

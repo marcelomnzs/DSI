@@ -1,6 +1,7 @@
 import 'package:app_dsi/screens/update_exercise_page.dart';
 import 'package:app_dsi/services/firestore.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class Exercises extends StatefulWidget {
@@ -13,6 +14,7 @@ class Exercises extends StatefulWidget {
 class _ExercisesState extends State<Exercises> {
 // Creating firestore instance
   final FirestoreService firestoreService = FirestoreService();
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +24,8 @@ class _ExercisesState extends State<Exercises> {
         centerTitle: true,
       ),
       body: StreamBuilder<QuerySnapshot>(
-        stream: firestoreService.getExerciseStream(),
+        stream: firestoreService.getExerciseStream(
+            userId: _firebaseAuth.currentUser!.uid),
         builder: (context, snapshot) {
           // If we have data, get all the docs
           if (snapshot.hasData) {
@@ -60,7 +63,9 @@ class _ExercisesState extends State<Exercises> {
                       ),
                       IconButton(
                         onPressed: () {
-                          firestoreService.deleteExercise(docID);
+                          firestoreService.deleteExercise(
+                              userId: _firebaseAuth.currentUser!.uid,
+                              docID: docID);
                         },
                         icon: const Icon(Icons.delete),
                       )

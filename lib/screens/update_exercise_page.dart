@@ -1,6 +1,7 @@
 import 'package:app_dsi/core/theme/color_schemes.dart';
 import 'package:app_dsi/services/firestore.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -16,6 +17,7 @@ class UpdateExercisePage extends StatefulWidget {
 class _UpdateExercisePageState extends State<UpdateExercisePage> {
   // Firestore instance
   final FirestoreService firestoreService = FirestoreService();
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
   // Controller for textInput
   final _textController = TextEditingController();
@@ -119,7 +121,10 @@ class _UpdateExercisePageState extends State<UpdateExercisePage> {
                   onPressed: () {
                     final Timestamp timestamp = Timestamp.fromDate(dateTime);
                     firestoreService.updateExercise(
-                        widget.docID, _textController.text, timestamp);
+                        userId: _firebaseAuth.currentUser!.uid,
+                        docID: widget.docID,
+                        newType: _textController.text,
+                        newTimestamp: timestamp);
 
                     // UI improvent
                     _textController.clear();

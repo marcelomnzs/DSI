@@ -163,15 +163,6 @@ class LoginPage extends StatelessWidget {
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                             content: Text('Erro4: $erro'),
                           ));
-                        } else {
-                          // Navegar para a próxima página se não houver erro
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  const Splash(nextRoute: '/homepage'),
-                            ),
-                          );
                         }
                       }).catchError((e) {
                         // Tratar erros inesperados

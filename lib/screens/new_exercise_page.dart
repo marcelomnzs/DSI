@@ -1,6 +1,7 @@
 import 'package:app_dsi/core/theme/color_schemes.dart';
 import 'package:app_dsi/services/firestore.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -14,6 +15,7 @@ class NewExercise extends StatefulWidget {
 class _NewExerciseState extends State<NewExercise> {
   // Firestore instance
   final FirestoreService firestoreService = FirestoreService();
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
   // Controller for textInput
   final _textController = TextEditingController();
@@ -113,11 +115,12 @@ class _NewExerciseState extends State<NewExercise> {
               child: Padding(
                 padding: const EdgeInsets.only(top: 4.0),
                 child: MaterialButton(
-                  onPressed: () {
+                  onPressed: () async {
                     final Timestamp timestamp = Timestamp.fromDate(dateTime);
-                    firestoreService.addExercise(
-                        _textController.text, timestamp);
-
+                    await firestoreService.addExercise(
+                        userId: _firebaseAuth.currentUser!.uid,
+                        type: _textController.text,
+                        timestamp: timestamp);
                     // UI improvent
                     _textController.clear();
                     // Return to all exercises
