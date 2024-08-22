@@ -1,19 +1,24 @@
 import 'package:app_dsi/screens/home_page.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:app_dsi/core/theme/color_schemes.dart';
 import 'package:app_dsi/services/autenticacao.dart'; // Verifique o caminho
 
-class RegisterPage extends StatelessWidget {
+class RegisterPage extends StatefulWidget {
   RegisterPage({Key? key});
+
+  @override
+  State<RegisterPage> createState() => _RegisterPageState();
+}
+
+class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _nomeController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final _formkey = GlobalKey<FormState>();
 
-  AutenticacaoServico _autenticaServico = AutenticacaoServico();
+  final AutenticacaoServico _autenticaServico = AutenticacaoServico();
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +30,7 @@ class RegisterPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 30), // Adicionado espaço acima da imagem
+              const SizedBox(height: 30), // Adicionado espaço acima da imagem
               Flexible(
                 child: FractionallySizedBox(
                   heightFactor: 0.9,
@@ -35,11 +40,11 @@ class RegisterPage extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 20), // Aumentado o espaço abaixo da imagem
+              const SizedBox(height: 20), // Aumentado o espaço abaixo da imagem
               Text(
                 'Cadastro',
                 style: GoogleFonts.poppins(
-                  textStyle: TextStyle(
+                  textStyle: const TextStyle(
                     fontSize: 36,
                     fontWeight: FontWeight.w900,
                   ),
@@ -50,11 +55,11 @@ class RegisterPage extends StatelessWidget {
                 child: TextFormField(
                   controller: _nomeController,
                   decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.account_circle),
+                    prefixIcon: const Icon(Icons.account_circle),
                     labelText: 'Nome',
                     hintText: 'Digite seu nome',
                     labelStyle: GoogleFonts.poppins(
-                      textStyle: TextStyle(
+                      textStyle: const TextStyle(
                         fontWeight: FontWeight.w400,
                         fontSize: 18,
                       ),
@@ -72,11 +77,11 @@ class RegisterPage extends StatelessWidget {
                 child: TextFormField(
                   controller: _emailController,
                   decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.alternate_email),
+                    prefixIcon: const Icon(Icons.alternate_email),
                     labelText: 'Email',
                     hintText: 'Digite seu email',
                     labelStyle: GoogleFonts.poppins(
-                      textStyle: TextStyle(
+                      textStyle: const TextStyle(
                         fontWeight: FontWeight.w400,
                         fontSize: 18,
                       ),
@@ -103,11 +108,11 @@ class RegisterPage extends StatelessWidget {
                 child: TextFormField(
                   controller: _passwordController,
                   decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.lock),
+                    prefixIcon: const Icon(Icons.lock),
                     labelText: 'Senha',
                     hintText: '********',
                     labelStyle: GoogleFonts.poppins(
-                      textStyle: TextStyle(
+                      textStyle: const TextStyle(
                         fontWeight: FontWeight.w400,
                         fontSize: 18,
                       ),
@@ -135,11 +140,11 @@ class RegisterPage extends StatelessWidget {
                 // Adicionado espaço após o campo 'Senha'
                 child: TextFormField(
                   decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.lock),
+                    prefixIcon: const Icon(Icons.lock),
                     labelText: 'Confirmar senha',
                     hintText: '********',
                     labelStyle: GoogleFonts.poppins(
-                      textStyle: TextStyle(
+                      textStyle: const TextStyle(
                         fontWeight: FontWeight.w400,
                         fontSize: 18,
                       ),
@@ -157,20 +162,20 @@ class RegisterPage extends StatelessWidget {
                   },
                 ),
               ),
-              SizedBox(height: 20), // Adicionado espaço após os campos de senha
+              const SizedBox(
+                  height: 20), // Adicionado espaço após os campos de senha
               Center(
                 child: GestureDetector(
                   onTap: () {
-                    botao();
-                    // verificar formulario para proxima pagina
+                    // Verificar formulário e criar usuário
                     if (_formkey.currentState!.validate()) {
-                      // se o formulario for valido, para proxima pagina
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const HomePage()));
+                      // se o formulario for valido, criar usuário e redirecionar para homepage
+                      _autenticaServico.cadastrarUsuario(
+                          nome: _nomeController.text,
+                          senha: _passwordController.text,
+                          email: _emailController.text);
+                      Navigator.pushNamed(context, '/homepage');
                     }
-                    ;
                   },
                   child: Container(
                     alignment: Alignment.center,
@@ -183,7 +188,7 @@ class RegisterPage extends StatelessWidget {
                     child: Text(
                       'Cadastrar-se',
                       style: GoogleFonts.poppins(
-                        textStyle: TextStyle(
+                        textStyle: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                           fontSize: 14,
@@ -193,17 +198,17 @@ class RegisterPage extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                   height: 20), // Aumentado o espaço após o botão de cadastro
               Center(
                 child: GestureDetector(
                   onTap: () {
-                    Navigator.pop(context);
+                    Navigator.pushNamed(context, '/loginpage');
                   },
                   child: Text(
                     'Já possui uma conta? Faça login',
                     style: GoogleFonts.poppins(
-                      textStyle: TextStyle(
+                      textStyle: const TextStyle(
                         fontWeight: FontWeight.w300,
                         fontSize: 10,
                       ),
@@ -211,8 +216,9 @@ class RegisterPage extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 20), // Aumentado o espaço após o texto de login
-              Padding(
+              const SizedBox(
+                  height: 20), // Aumentado o espaço após o texto de login
+              const Padding(
                 padding: EdgeInsets.only(bottom: 8.0),
                 child: Row(
                   children: [
@@ -239,22 +245,5 @@ class RegisterPage extends StatelessWidget {
         ),
       ),
     );
-  }
-
-// para visualizar se os dados estão sendo recebidos corretamentes e mandar para o firestore
-  botao() {
-    String nome = _nomeController.text;
-    String senha = _passwordController.text;
-    String email = _emailController.text;
-
-    if (_formkey.currentState!.validate()) {
-      print('Cadastro válido');
-      print(
-          'Email: ${_emailController.text}, Nome: ${_nomeController.text}, Senha: ${_passwordController.text}');
-      _autenticaServico.cadastrarUsuario(
-          nome: nome, senha: senha, email: email);
-    } else {
-      print('Inválido');
-    }
   }
 }

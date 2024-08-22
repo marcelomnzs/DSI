@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AutenticacaoServico {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   // Método para cadastrar um novo usuário com e-mail e senha
@@ -12,17 +14,26 @@ class AutenticacaoServico {
     required String email,
   }) async {
     try {
-      await _firebaseAuth.createUserWithEmailAndPassword(
-        email: email,
-        password: senha,
-      );
+      UserCredential userData = await _firebaseAuth
+          .createUserWithEmailAndPassword(email: email, password: senha);
+
+      // Armazenando usuário no BD
+      await _firestore.collection('users').doc(userData.user!.uid).set({
+        'nome': nome,
+        'email': email,
+        // TODO: Verificar os outros dados do usuário que serão pegos
+      });
     } on FirebaseAuthException catch (e) {
-      print('Erro ao cadastrar usuário: ${e.message}');
+      switch (e.code) {
+        case 'email-already-in-use':
+          print('O email já está em uso!');
+      }
     }
   }
 
   // Método para logar um usuário com e-mail e senha
-  Future<String?> logarUsuario({required String email, required String senha}) async {
+  Future<String?> logarUsuario(
+      {required String email, required String senha}) async {
     try {
       await _firebaseAuth.signInWithEmailAndPassword(
         email: email,
@@ -47,7 +58,8 @@ class AutenticacaoServico {
       }
 
       // Obtém a autenticação do Google
-      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
 
       // Cria uma credencial do Firebase com o token do Google
       final AuthCredential credential = GoogleAuthProvider.credential(
