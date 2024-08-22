@@ -127,7 +127,19 @@ class _NewExerciseState extends State<NewExercise> {
                     Navigator.pushNamed(context, '/homepage');
                   },
                   color: lightColorScheme.primary,
-                  child: const Text('Adicionar'),
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(25, 15, 25, 15),
+                    child: Text(
+                      'Adicionar',
+                      style: GoogleFonts.poppins(
+                        textStyle: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14,
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ),

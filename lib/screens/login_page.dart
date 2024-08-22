@@ -59,10 +59,10 @@ class LoginPage extends StatelessWidget {
                   controller: _emailController,
                   decoration: InputDecoration(
                     labelText: 'Email',
-                    prefixIcon: Icon(Icons.alternate_email),
+                    prefixIcon: const Icon(Icons.alternate_email),
                     hintText: 'Digite seu email',
                     labelStyle: GoogleFonts.poppins(
-                      textStyle: TextStyle(
+                      textStyle: const TextStyle(
                         fontWeight: FontWeight.w400,
                         fontSize: 18,
                       ),

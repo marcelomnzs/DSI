@@ -8,7 +8,7 @@ import 'package:app_dsi/services/firestore.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -28,18 +28,24 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         toolbarHeight: 120,
         centerTitle: true,
-        title: const Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              'Olá, Fulano',
-              style: TextStyle(
-                fontWeight: FontWeight.w900,
+              'Olá!',
+              style: GoogleFonts.poppins(
+                textStyle: const TextStyle(
+                  fontWeight: FontWeight.w900,
+                ),
               ),
             ),
             Text(
               'Bem-vindo de volta',
-              style: TextStyle(fontSize: 14),
+              style: GoogleFonts.poppins(
+                textStyle: const TextStyle(
+                  fontSize: 14,
+                ),
+              ),
             ),
           ],
         ),
@@ -64,18 +70,20 @@ class _HomePageState extends State<HomePage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const Text(
-                  'Minhas Atividades',
-                  style: TextStyle(
-                    fontSize: 32,
-                    fontWeight: FontWeight.w900,
-                  ),
-                ),
+                Text('Minhas Atividades',
+                    style: GoogleFonts.poppins(
+                      textStyle: const TextStyle(
+                        fontSize: 32,
+                        fontWeight: FontWeight.w900,
+                      ),
+                    )),
                 GestureDetector(
                   onTap: () => Navigator.pushNamed(context, '/exercises'),
-                  child: const Text(
+                  child: Text(
                     'Ver todas >',
-                    style: TextStyle(color: Colors.black26),
+                    style: GoogleFonts.poppins(
+                      textStyle: const TextStyle(color: Colors.black26),
+                    ),
                   ),
                 ),
               ],
@@ -139,23 +147,27 @@ class _HomePageState extends State<HomePage> {
               }
             },
           ),
-          const Padding(
-            padding: EdgeInsets.fromLTRB(24, 16, 24, 16),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(24, 16, 24, 16),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
                   'Métricas do Usuário',
-                  style: TextStyle(
-                    fontSize: 32,
-                    fontWeight: FontWeight.w900,
+                  style: GoogleFonts.poppins(
+                    textStyle: const TextStyle(
+                      fontSize: 32,
+                      fontWeight: FontWeight.w900,
+                    ),
                   ),
                 ),
-                Text(
-                  'Ver todas >',
-                  style: TextStyle(color: Colors.black26),
-                ),
+                Text('Ver todas >',
+                    style: GoogleFonts.poppins(
+                      textStyle: const TextStyle(
+                        color: Colors.black26,
+                      ),
+                    )),
               ],
             ),
           ),
@@ -178,7 +190,7 @@ class MetricItem extends StatelessWidget {
   final String label;
   final String value;
 
-  MetricItem({required this.label, required this.value});
+  const MetricItem({super.key, required this.label, required this.value});
 
   @override
   Widget build(BuildContext context) {
@@ -186,12 +198,18 @@ class MetricItem extends StatelessWidget {
       children: [
         Text(
           value,
-          style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
+          style: GoogleFonts.poppins(
+            textStyle: const TextStyle(
+              fontSize: 24.0,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ),
-        SizedBox(height: 4.0),
+        const SizedBox(height: 4.0),
         Text(
           label,
           textAlign: TextAlign.center,
+          style: GoogleFonts.poppins(),
         ),
       ],
     );

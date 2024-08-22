@@ -3,6 +3,7 @@ import 'package:app_dsi/services/firestore.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class Exercises extends StatefulWidget {
   const Exercises({super.key});
@@ -20,7 +21,17 @@ class _ExercisesState extends State<Exercises> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Exercises'),
+        title: Text(
+          'Exercises',
+          style: GoogleFonts.poppins(
+            textStyle: GoogleFonts.poppins(
+              textStyle: const TextStyle(
+                fontSize: 24.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ),
         centerTitle: true,
       ),
       body: StreamBuilder<QuerySnapshot>(
@@ -46,7 +57,10 @@ class _ExercisesState extends State<Exercises> {
 
                 // Display as a list tile
                 return ListTile(
-                  title: Text(exerciseType.toUpperCase()),
+                  title: Text(
+                    exerciseType.toUpperCase(),
+                    style: GoogleFonts.poppins(),
+                  ),
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -75,7 +89,13 @@ class _ExercisesState extends State<Exercises> {
               },
             );
           } else {
-            return const Text('No notes...');
+            return Text(
+              'No notes...',
+              style: GoogleFonts.poppins(
+                fontSize: 14,
+                fontWeight: FontWeight.w800,
+              ),
+            );
           }
         },
       ),
