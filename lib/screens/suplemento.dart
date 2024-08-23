@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart'; // Importação para autenticação
 
 class Suplemento extends StatefulWidget {
   const Suplemento({super.key});
@@ -15,11 +17,49 @@ class _SuplementoState extends State<Suplemento> {
   final TextEditingController _dataController = TextEditingController();
   final TextEditingController _horaController = TextEditingController();
 
-  void _adicionarSuplemento() {
-    // Adicione sua lógica para processar os dados do suplemento aqui
-    // Por exemplo, você pode salvar os dados ou fazer uma navegação
-    Navigator.pushNamed(context, '/homepage'); // Altere o nome da rota conforme necessário
+  void _adicionarSuplemento() async {
+    // Obtendo os valores dos controladores
+    String quantidade = _quantidadeController.text;
+    String descricao = _descricaoController.text;
+    String data = _dataController.text;
+    String hora = _horaController.text;
+
+    // Obtendo o UID do usuário autenticado
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      // Se o usuário não estiver autenticado, mostre uma mensagem de erro
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Você precisa estar logado para adicionar um suplemento')),
+      );
+      return;
+    }
+    String userId = user.uid;
+
+    // Validando se todos os campos estão preenchidos
+    if (quantidade.isNotEmpty && descricao.isNotEmpty && data.isNotEmpty && hora.isNotEmpty) {
+      // Criando uma instância do Firestore
+      final firestore = FirebaseFirestore.instance;
+
+      // Adicionando os dados no Firestore
+      await firestore.collection('users').doc(userId).collection('suplementos').add({
+        'userId': userId, // Adiciona o UID do usuário
+        'quantidade': quantidade,
+        'descricao': descricao,
+        'data': data,
+        'hora': hora,
+      });
+
+      // Navegando para a página desejada após adicionar os dados
+      Navigator.pushNamed(context, '/homepage');
+    } else {
+      // Mostra uma mensagem de erro se algum campo estiver vazio
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Preencha todos os campos')),
+      );
+    }
   }
+
+   
 
   @override
   Widget build(BuildContext context) {
