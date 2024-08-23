@@ -12,13 +12,17 @@ class Suplemento extends StatefulWidget {
 }
 
 class _SuplementoState extends State<Suplemento> {
+  final TextEditingController _nomeController = TextEditingController();
   final TextEditingController _quantidadeController = TextEditingController();
   final TextEditingController _descricaoController = TextEditingController();
   final TextEditingController _dataController = TextEditingController();
   final TextEditingController _horaController = TextEditingController();
+  
+
 
   void _adicionarSuplemento() async {
     // Obtendo os valores dos controladores
+    String nome = _nomeController.text;
     String quantidade = _quantidadeController.text;
     String descricao = _descricaoController.text;
     String data = _dataController.text;
@@ -42,6 +46,7 @@ class _SuplementoState extends State<Suplemento> {
 
       // Adicionando os dados no Firestore
       await firestore.collection('users').doc(userId).collection('suplementos').add({
+        'nome': nome,
         'userId': userId, // Adiciona o UID do usuário
         'quantidade': quantidade,
         'descricao': descricao,
@@ -72,6 +77,7 @@ class _SuplementoState extends State<Suplemento> {
         child: Column(
           children: [
             TextFormField(
+              controller: _nomeController,
               decoration: const InputDecoration(
                 labelText: "Nome suplemento",
                 fillColor: Colors.white,

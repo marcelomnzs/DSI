@@ -3,6 +3,8 @@ import 'package:app_dsi/firebase_options.dart';
 import 'package:app_dsi/screens/ForgotPassword.dart';
 import 'package:app_dsi/screens/RegisterPage.dart';
 import 'package:app_dsi/screens/Splash.dart';
+import 'package:app_dsi/screens/allSuplementos.dart';
+import 'package:app_dsi/screens/editarSuplemento.dart';
 import 'package:app_dsi/screens/exercises_page.dart';
 import 'package:app_dsi/screens/home_page.dart';
 import 'package:app_dsi/screens/login_page.dart';
@@ -38,6 +40,8 @@ class MyApp extends StatelessWidget {
         '/newexercise': (context) => const NewExercise(),
         '/suplemento': (context) => const Suplemento(),
         '/forgotPassword': (context) => ForgotPassword(),
+        '/AllSuplementos': (context) => AllSuplementos(),
+        
       },
       home: const AuthCheck(),
     );

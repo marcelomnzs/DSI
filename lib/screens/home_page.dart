@@ -171,6 +171,29 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
           ),
+          GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(context, '/AllSuplementos');
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                color: lightColorScheme.secondary,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              height: 50,
+              width: 220,
+              child: Center(
+                child: Text(
+                  'Meus Suplementos',
+                  style: TextStyle(
+                    color: lightColorScheme.onSecondary,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+          ),
+
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
