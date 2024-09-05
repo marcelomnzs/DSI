@@ -8,6 +8,7 @@ import 'package:app_dsi/screens/editarSuplemento.dart';
 import 'package:app_dsi/screens/exercises_page.dart';
 import 'package:app_dsi/screens/home_page.dart';
 import 'package:app_dsi/screens/login_page.dart';
+import 'package:app_dsi/screens/maps.dart';
 import 'package:app_dsi/screens/new_exercise_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -41,6 +42,7 @@ class MyApp extends StatelessWidget {
         '/suplemento': (context) => const Suplemento(),
         '/forgotPassword': (context) => ForgotPassword(),
         '/AllSuplementos': (context) => AllSuplementos(),
+        '/Maps': (context) => MapPicker(onLocationPicked: (LatLng ) {  },),
         
       },
       home: const AuthCheck(),

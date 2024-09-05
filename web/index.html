@@ -32,10 +32,23 @@
   <title>app_dsi</title>
   <link rel="manifest" href="manifest.json">
 
+  <!-- Google Maps API Script -->
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDircw8nUpqXb8xiMLr1QsDe_usdrMKjwo&callback=initMap">
+  </script>
+  
+  <script>
+    // Function to initialize the Google Map
+    function initMap() {
+      console.log('Google Maps API loaded');
+    }
+  </script>
+
   <script>
     // The value below is injected by flutter build, do not touch.
     const serviceWorkerVersion = "{{flutter_service_worker_version}}";
   </script>
+
   <!-- This script adds the flutter initialization JS code -->
   <script src="flutter.js" defer></script>
 </head>

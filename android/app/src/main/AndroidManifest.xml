@@ -18,7 +18,18 @@
             <meta-data
               android:name="io.flutter.embedding.android.NormalTheme"
               android:resource="@style/NormalTheme"
+
               />
+
+            <meta-data
+            
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCQvlxPBQ_7_XSxFeBQ__DRICTaGovc-rk"
+        
+            />
+            <!-- Permissões necessárias para o Google Maps -->
+            <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+            <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>

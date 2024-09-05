@@ -4,6 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'location.dart';
 
 class UpdateExercisePage extends StatefulWidget {
   final String docID;
@@ -15,22 +17,57 @@ class UpdateExercisePage extends StatefulWidget {
 }
 
 class _UpdateExercisePageState extends State<UpdateExercisePage> {
-  // Firestore instance
   final FirestoreService firestoreService = FirestoreService();
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-
-  // Controller for textInput
   final _textController = TextEditingController();
+  LatLng? _selectedLocation;
 
-  // Date and Time picker utils
-  DateTime dateTime = DateTime(DateTime.now().year, DateTime.now().month,
-      DateTime.now().day, DateTime.now().hour, DateTime.now().minute);
+  DateTime dateTime = DateTime.now();
+
+  @override
+  void initState() {
+    super.initState();
+    _loadExercise();
+  }
+
+  Future<void> _loadExercise() async {
+    final doc = await firestoreService.getExerciseDocument(
+      userId: _firebaseAuth.currentUser!.uid,
+      docID: widget.docID,
+    );
+
+    if (doc.exists) {
+      final data = doc.data() as Map<String, dynamic>;
+      setState(() {
+        _textController.text = data['type'] ?? '';
+        dateTime = (data['timestamp'] as Timestamp).toDate();
+        GeoPoint location = data['location'] ?? GeoPoint(0, 0);
+        _selectedLocation = LatLng(location.latitude, location.longitude);
+      });
+    }
+  }
+
+  Future<void> _pickLocation() async {
+    final LatLng? newLocation = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => SelectLocationPage(
+          initialPosition: _selectedLocation ?? LatLng(0, 0),
+        ),
+      ),
+    );
+
+    if (newLocation != null) {
+      setState(() {
+        _selectedLocation = newLocation;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    // Hours and minutes utils
     final String hours = dateTime.hour.toString().padLeft(2, '0');
-    final String minutes = dateTime.hour.toString().padLeft(2, '0');
+    final String minutes = dateTime.minute.toString().padLeft(2, '0');
 
     return Scaffold(
       appBar: AppBar(
@@ -41,7 +78,6 @@ class _UpdateExercisePageState extends State<UpdateExercisePage> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TextFormField(
               controller: _textController,
@@ -62,58 +98,64 @@ class _UpdateExercisePageState extends State<UpdateExercisePage> {
                 ),
               ),
             ),
-            Center(
-              child: Row(
-                children: [
-                  Expanded(
-                    child: ElevatedButton(
-                      child: Text(
-                          '${dateTime.day}/${dateTime.month}/${dateTime.year}'),
-                      onPressed: () async {
-                        final date = await pickDate();
-                        // If user pressed "CANCEL"
-                        if (date == null) return;
-
-                        // Pressed 'OK'
-                        final selectedDateTime = DateTime(
+            Row(
+              children: [
+                Expanded(
+                  child: ElevatedButton(
+                    child: Text(
+                        '${dateTime.day}/${dateTime.month}/${dateTime.year}'),
+                    onPressed: () async {
+                      final date = await pickDate();
+                      if (date == null) return;
+                      setState(() {
+                        dateTime = DateTime(
                           date.year,
                           date.month,
                           date.day,
                           dateTime.hour,
                           dateTime.minute,
                         );
-
-                        setState(() {
-                          dateTime = selectedDateTime;
-                        });
-                      },
-                    ),
+                      });
+                    },
                   ),
-                  const SizedBox(height: 80),
-                  Expanded(
-                    child: ElevatedButton(
-                      child: Text('$hours:$minutes'),
-                      onPressed: () async {
-                        final time = await pickTime();
-                        // If user pressed "CANCEL"
-                        if (time == null) return;
-                        // Pressed 'OK'
-                        final selectedDateTime = DateTime(
-                            dateTime.year,
-                            dateTime.month,
-                            dateTime.day,
-                            time.hour,
-                            time.minute);
-
-                        setState(() {
-                          dateTime = selectedDateTime;
-                        });
-                      },
-                    ),
-                  )
-                ],
-              ),
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: ElevatedButton(
+                    child: Text('$hours:$minutes'),
+                    onPressed: () async {
+                      final time = await pickTime();
+                      if (time == null) return;
+                      setState(() {
+                        dateTime = DateTime(
+                          dateTime.year,
+                          dateTime.month,
+                          dateTime.day,
+                          time.hour,
+                          time.minute,
+                        );
+                      });
+                    },
+                  ),
+                ),
+              ],
             ),
+            SizedBox(height: 16),
+            Row(
+              children: [
+                Expanded(
+                  child: ElevatedButton(
+                    child: Text(
+                      _selectedLocation != null
+                          ? 'Localização: ${_selectedLocation!.latitude}, ${_selectedLocation!.longitude}'
+                          : 'Escolher Localização',
+                    ),
+                    onPressed: _pickLocation,
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 16),
             Center(
               child: Padding(
                 padding: const EdgeInsets.only(top: 4.0),
@@ -124,15 +166,19 @@ class _UpdateExercisePageState extends State<UpdateExercisePage> {
                         userId: _firebaseAuth.currentUser!.uid,
                         docID: widget.docID,
                         newType: _textController.text,
-                        newTimestamp: timestamp);
+                        newTimestamp: timestamp,
+                        newLocation: _selectedLocation != null
+                            ? GeoPoint(
+                                _selectedLocation!.latitude,
+                                _selectedLocation!.longitude,
+                              )
+                            : null);
 
-                    // UI improvent
                     _textController.clear();
-                    // Return to all exercises
                     Navigator.pushNamed(context, '/homepage');
                   },
                   color: lightColorScheme.primary,
-                  child: const Text('Adicionar'),
+                  child: const Text('Salvar'),
                 ),
               ),
             ),

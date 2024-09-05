@@ -1,9 +1,12 @@
 import 'package:app_dsi/core/theme/color_schemes.dart';
+import 'package:app_dsi/screens/maps.dart';
 import 'package:app_dsi/services/firestore.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+ // Import the MapPicker widget
 
 class NewExercise extends StatefulWidget {
   const NewExercise({super.key});
@@ -13,21 +16,16 @@ class NewExercise extends StatefulWidget {
 }
 
 class _NewExerciseState extends State<NewExercise> {
-  // Firestore instance
   final FirestoreService firestoreService = FirestoreService();
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-
-  // Controller for textInput
   final _textController = TextEditingController();
-
-  // Date and Time picker utils
-  DateTime dateTime = DateTime(DateTime.now().year, DateTime.now().month,
-      DateTime.now().day, DateTime.now().hour, DateTime.now().minute);
+  DateTime dateTime = DateTime.now();
+  LatLng? _selectedLocation;
 
   @override
   Widget build(BuildContext context) {
     final String hours = dateTime.hour.toString().padLeft(2, '0');
-    final String minutes = dateTime.hour.toString().padLeft(2, '0');
+    final String minutes = dateTime.minute.toString().padLeft(2, '0');
 
     return Scaffold(
       appBar: AppBar(
@@ -68,10 +66,7 @@ class _NewExerciseState extends State<NewExercise> {
                           '${dateTime.day}/${dateTime.month}/${dateTime.year}'),
                       onPressed: () async {
                         final date = await pickDate();
-                        // If user pressed "CANCEL"
                         if (date == null) return;
-
-                        // Pressed 'OK'
                         final selectedDateTime = DateTime(
                           date.year,
                           date.month,
@@ -79,36 +74,61 @@ class _NewExerciseState extends State<NewExercise> {
                           dateTime.hour,
                           dateTime.minute,
                         );
-
                         setState(() {
                           dateTime = selectedDateTime;
                         });
                       },
                     ),
                   ),
-                  const SizedBox(height: 80),
+                  const SizedBox(width: 16),
                   Expanded(
                     child: ElevatedButton(
                       child: Text('$hours:$minutes'),
                       onPressed: () async {
                         final time = await pickTime();
-                        // If user pressed "CANCEL"
                         if (time == null) return;
-                        // Pressed 'OK'
                         final selectedDateTime = DateTime(
                             dateTime.year,
                             dateTime.month,
                             dateTime.day,
                             time.hour,
                             time.minute);
-
                         setState(() {
                           dateTime = selectedDateTime;
                         });
                       },
                     ),
-                  )
+                  ),
                 ],
+              ),
+            ),
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 16.0),
+                child: ElevatedButton(
+                  onPressed: () async {
+                    final location = await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => MapPicker(
+                          onLocationPicked: (location) {
+                            Navigator.pop(context, location);
+                          },
+                        ),
+                      ),
+                    );
+                    if (location != null) {
+                      setState(() {
+                        _selectedLocation = location;
+                      });
+                    }
+                  },
+                  child: Text(
+                    _selectedLocation != null
+                        ? 'Location: ${_selectedLocation!.latitude}, ${_selectedLocation!.longitude}'
+                        : 'Pick Location',
+                  ),
+                ),
               ),
             ),
             Center(
@@ -118,12 +138,17 @@ class _NewExerciseState extends State<NewExercise> {
                   onPressed: () async {
                     final Timestamp timestamp = Timestamp.fromDate(dateTime);
                     await firestoreService.addExercise(
-                        userId: _firebaseAuth.currentUser!.uid,
-                        type: _textController.text,
-                        timestamp: timestamp);
-                    // UI improvent
+                      userId: _firebaseAuth.currentUser!.uid,
+                      type: _textController.text,
+                      timestamp: timestamp,
+                      location: _selectedLocation != null
+                          ? GeoPoint(
+                              _selectedLocation!.latitude,
+                              _selectedLocation!.longitude,
+                            )
+                          : null,
+                    );
                     _textController.clear();
-                    // Return to all exercises
                     Navigator.pushNamed(context, '/homepage');
                   },
                   color: lightColorScheme.primary,
